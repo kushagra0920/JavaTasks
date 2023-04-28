@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @RestController
 @RequestMapping("api")
 public class serviceController {
-    @RequestMapping("/register")
+    @PostMapping("/register")
     public String register(
             @Valid @RequestBody HashMap<String, Object> body) throws Exception {
         try {
@@ -27,7 +27,7 @@ public class serviceController {
         }
     }
 
-    @RequestMapping("/sum")
+    @PostMapping("/sum")
     public String sum(
             @Valid @RequestBody HashMap<String, Object> body) throws Exception {
         try {
@@ -39,7 +39,7 @@ public class serviceController {
         }
     }
 
-    @RequestMapping("/verify")
+    @PostMapping("/verify")
     public String verify(
             @Valid @RequestBody HashMap<String, Object> body) throws Exception {
         try {
