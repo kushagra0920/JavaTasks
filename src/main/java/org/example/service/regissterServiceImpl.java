@@ -18,7 +18,7 @@ import org.example.UserRepository.Input;
 import org.example.dto.UserRegistrationDto;
 
 @Service
-public class regissterServiceImpl implements registerService {
+public class regissterServiceImpl implements RegisterService {
 
     public regissterServiceImpl(){
 
@@ -50,6 +50,15 @@ public class regissterServiceImpl implements registerService {
             throw new UsernameNotFoundException("Invalid username or password.");
         }
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
+    }
+
+    public User sendUserByUsername(String username) throws UsernameNotFoundException {
+
+        User user = userRepository.findByEmail(username);
+        if(user == null) {
+            throw new UsernameNotFoundException("Invalid username or password.");
+        }
+        return  user;
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
