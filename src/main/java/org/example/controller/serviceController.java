@@ -3,6 +3,7 @@ package org.example.controller;
 import org.example.dto.UserRegistrationDto;
 import org.example.model.User;
 import org.example.service.regissterServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
@@ -14,12 +15,14 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @RestController
 @RequestMapping("api")
 public class serviceController {
+
+    @Autowired()
+    private regissterServiceImpl registerServiceImpl;
     @PostMapping("/register")
     public String register(
             @Valid @RequestBody HashMap<String, Object> body) throws Exception {
         try {
             UserRegistrationDto userRegistrationDto = new UserRegistrationDto((java.lang.String) body.get("firstName"), (java.lang.String) body.get("lastName"), (java.lang.String) body.get("email"), (java.lang.String) body.get("password"));
-            regissterServiceImpl registerServiceImpl = new regissterServiceImpl();
             registerServiceImpl.save(userRegistrationDto);
             return "Successful register";
         } catch (Exception ee) {
@@ -43,7 +46,6 @@ public class serviceController {
     public String verify(
             @Valid @RequestBody HashMap<String, Object> body) throws Exception {
         try {
-            regissterServiceImpl registerService = new regissterServiceImpl();
             User user = registerService.sendUserByUsername((String) body.get("email"));
             AtomicBoolean result= new AtomicBoolean(false);
             user.getRoles().stream().forEach((e) -> {
